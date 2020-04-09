@@ -6,6 +6,8 @@ import subprocess
 import os
 import nmap
 
+
+#this function is used to make an ARP scan on a particular network
 def arp_scan(ip_addr: str, left_index: int, right_index: int):
     for n in range(left_index, right_index):
         subnet = ip_addr[0:len(ip_addr)-len(str(right_index-left_index))]
@@ -13,6 +15,7 @@ def arp_scan(ip_addr: str, left_index: int, right_index: int):
         os.system('nmap -PR ' + ip_addr)
 
 
+#this function is used to make an ICMP scan on a particular network
 def icmp_host_disc(ip_addr: str, left_index: int, right_index: int):
     for n in range(left_index, right_index):
         subnet = ip_addr[0:len(ip_addr)-len(str(right_index-left_index))]
@@ -20,6 +23,7 @@ def icmp_host_disc(ip_addr: str, left_index: int, right_index: int):
         os.system('nmap -PE ' + ip)
 
 
+#this function is used to make ports scan of a particular host
 def port_scan(ip_addr: str, port_range: str,  args: str):
         port_scanner.scan(ip_addr, port_range, args)
         print(port_scanner.scaninfo())
@@ -36,6 +40,7 @@ def scan():
                     1) an host 
                     2) a network\n""")
     if resp_1 == '1':
+        # if the target is an host then I'm here
         resp_2 = input("""\nWhat do you want to do?"
                 1) ARP scan
                 2) ICMP Host discovering 
@@ -47,6 +52,8 @@ def scan():
         type(ip_addr)
         left_index = right_index = 0
     else:
+        # if the target is a network then I'm here.
+        # The port scanning option is not avaible in this case for performance reason
         resp_2 = input("""\nWhat do you want to do?"
                 1) ARP scan
                 2) ICMP Host discovering\n""")
@@ -61,17 +68,21 @@ def scan():
     
 
     if resp_2 == '1':
+        # if I want to do an ARP scan then I'm here
         if left_index == right_index:
             os.system('nmap -sn -PR ' + ip_addr)
         else:
             arp_scan(ip_addr, left_index, right_index)
     elif resp_2 == '2':
+        # if I want to do an ICMP scan then I'm here
         if left_index == right_index:
             os.system('nmap -sn -PE ' + ip_addr)
         else:
             icmp_host_disc(ip_addr, left_index, right_index)
     else:
+        # if I want to do a port scanning then I'm here
         if resp_1 == '1': 
+            # if I want to do a port scanning and the target is an host then I'm here
             resp_3 = input("""\nEnter the port scan type you want to run:
                             1) SYN scan
                             2) ACK scan
@@ -84,11 +95,12 @@ def scan():
             
             resp_4 = input("""\nWhat ports you want to scan?"
                             1) particular port    
-                            2) Fast scan (scan only the most important port)                    
+                            2) Fast scan (scan only the most important ports)                    
                             3) particular range of ports\n""")
 
             
             if resp_4 == '1':
+                # if I want to scan a particular port then I'm here
                 port = input('\nGive me the particular port:')
                 print('\nPort chosen: {0}'.format(port))
                 if resp_3 == '1':
@@ -108,8 +120,10 @@ def scan():
                 else:
                     os.system('nmap -Pn -sV ' + ip_addr)
             elif resp_4 == '2':
+                # if I want to scan only the most important ports then I'm here
                 os.system('nmap -F ' + ip_addr)
             else:
+                # if I want to scan a particular range of ports then I'm here
                 ports = '1-1024'
                 prompt_ports = input('\nGive me the port range [1-1024]:')
                 ports = prompt_ports or ports
@@ -147,19 +161,21 @@ def again():
         again()
 
 
-
+#this is the program start function
 def start():
+    port_scanner = nmap.PortScanner()
+    welcome()
     scan()
     while again() ==  True:
         scan()
     print('Thanks for using my script, see you soon!!\n')
 
 
+#this is the program welcome function
 def welcome():
     print("Welcome, this is a simple discovering and scanning automation script")
     print("<-------------------------------------------------------->")
 
 
-port_scanner = nmap.PortScanner()
-welcome()
+#here the execution starts
 start()
