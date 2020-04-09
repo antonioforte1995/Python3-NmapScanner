@@ -1,2 +1,2 @@
-# Python3-NmapScanner
-Python3 Nmap Scanner
+# Simple discovering scanner
+Simple scanner in python to discover and scan hosts
