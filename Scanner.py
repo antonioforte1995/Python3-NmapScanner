@@ -163,7 +163,6 @@ def again():
 
 #this is the program start function
 def start():
-    port_scanner = nmap.PortScanner()
     welcome()
     scan()
     while again() ==  True:
@@ -178,4 +177,5 @@ def welcome():
 
 
 #here the execution starts
+port_scanner = nmap.PortScanner()
 start()
