@@ -2,7 +2,7 @@
 
 Simple network scanner - built with Python3 and Nmap.
 
-### Prerequisites
+## Prerequisites
 
 1) SO Unix-like
 2) python3
