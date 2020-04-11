@@ -13,9 +13,13 @@ sudo apt install python3
 ```
 sudo apt install python3-pip
 ```
-4) nmap
+4) python-nmap
 ```
 sudo pip3 install python-nmap
+```
+5) nmap
+```
+sudo apt install nmap
 ```
 
 ## Run the script
