@@ -16,22 +16,21 @@ def arp_scan(ip_addr: str, left_index: int, right_index: int):
 
 
 #this function is used to make ports scan of a particular host
-def port_scan(resp_3: int, left_index: int, right_index: int, ip_addr: str):
-	for n in range(left_index, right_index):
+def port_scan(resp_3: int, ip_addr: str):
 		if resp_3 == '1':
-			os.system('nmap -p' + str(n) +' -Pn -sS ' + ip_addr)
+			os.system('nmap -Pn -sS ' + ip_addr)
 		elif resp_3 == '2':
-			os.system('nmap -p' + str(n) +' -Pn -sA ' + ip_addr)
+			os.system('nmap -Pn -sA ' + ip_addr)
 		elif resp_3 == '3':
-			os.system('nmap -p' + str(n) +' -Pn -sF ' + ip_addr)
+			os.system('nmap -Pn -sF ' + ip_addr)
 		elif resp_3 == '4':
-			os.system('nmap -p' + str(n) +' -Pn -sU ' + ip_addr)
+			os.system('nmap -Pn -sU ' + ip_addr)
 		elif resp_3 == '5':
-			os.system('nmap -p' + str(n) +' -Pn -sO ' + ip_addr)
+			os.system('nmap -Pn -sO ' + ip_addr)
 		elif resp_3 == '6':
-			os.system('nmap -p' + str(n) +' -Pn -sA ' + ip_addr)
+			os.system('nmap -Pn -sA ' + ip_addr)
 		else:
-			os.system('nmap -p' + str(n) +' -Pn -sV ' + ip_addr)
+			os.system('nmap -Pn -sV ' + ip_addr)
 	
 
 
@@ -95,7 +94,7 @@ def scan():
 			resp_4 = input("""\nWhat ports you want to scan?"
 			1) particular port    
 			2) Fast scan (scan only the most important ports. SYN flag is used..)                    
-			3) particular range of ports\n""")
+			3) particular range of ports [1-1024]\n""")
 
 
 			if resp_4 == '1':
@@ -120,15 +119,8 @@ def scan():
 				# if I want to scan only the most important ports then I'm here
 				os.system('nmap -Pn -F ' + ip_addr)
 			else:
-				# if I want to scan a particular range of ports then I'm here
-				left_index_default = '1'
-				right_index_default = '1024'
-				left_index = int(input('\nGive me the left index of range of ports to scan:\n'))
-				right_index = int(input('\nGive me the right index of range of ports to scan:\n'))
-				left_index = left_index or left_index_default
-				right_index = (right_index + 1) or right_index_default
-				#print('\nSelected port range: ' + left_index + '-' + right_index'\n)
-				port_scan(resp_3, left_index, right_index, ip_addr)
+				# if I want to scan a particular range of ports [1-1024] then I'm here
+				port_scan(resp_3, ip_addr)
 	    
 
 #this function asks for user if he want to do a new scan
