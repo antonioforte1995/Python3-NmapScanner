@@ -17,9 +17,9 @@ sudo apt install python3-pip
 ```
 sudo pip3 install python-nmap
 ```
-5) ping
+5) fping
 ```
-sudo apt install iputils-ping
+sudo apt install fping
 ```
 6) nmap
 ```
