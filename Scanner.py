@@ -10,17 +10,18 @@ import nmap
 #this function is used to make an ARP scan on a particular network
 def arp_scan(ip_addr: str, left_index: int, right_index: int):
     for n in range(left_index, right_index+1):
-        subnet = ip_addr[0:len(ip_addr)-len(str(right_index-left_index))]
+        subnet = ip_addr[0:12]
         ip = subnet+'{0}'.format(n)
-        os.system('nmap -PR ' + ip_addr)
+        os.system('nmap -PR ' + ip)
 
 
 #this function is used to make an ICMP scan on a particular network
 def icmp_host_disc(ip_addr: str, left_index: int, right_index: int):
     for n in range(left_index, right_index+1):
-        subnet = ip_addr[0:len(ip_addr)-len(str(right_index-left_index))]
+        subnet = ip_addr[0:12]
         ip = subnet+'{0}'.format(n)
-        os.system('nmap -PE ' + ip)
+        os.system('ping -c 2 ' + ip)
+
 
 
 #this function is used to make ports scan of a particular host
@@ -85,7 +86,7 @@ def scan():
 	elif resp_2 == '2':
 		# if I want to do an ICMP scan then I'm here
 		if left_index == right_index:
-			os.system('nmap -sn -PE ' + ip_addr)
+			os.system('ping -c 2 ' + ip_addr)
 		else:
 			icmp_host_disc(ip_addr, left_index, right_index)
 	else:
