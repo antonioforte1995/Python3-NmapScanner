@@ -15,15 +15,6 @@ def arp_scan(ip_addr: str, left_index: int, right_index: int):
         os.system('nmap -PR ' + ip)
 
 
-#this function is used to make an ICMP scan on a particular network
-def icmp_host_disc(ip_addr: str, left_index: int, right_index: int):
-    for n in range(left_index, right_index+1):
-        subnet = ip_addr[0:12]
-        ip = subnet+'{0}'.format(n)
-        os.system('ping -c 2 ' + ip)
-
-
-
 #this function is used to make ports scan of a particular host
 def port_scan(resp_3: int, left_index: int, right_index: int, ip_addr: str):
 	for n in range(left_index, right_index):
@@ -72,23 +63,22 @@ def scan():
 		ip_addr = prompt_str or ip_addr
 		print("\nSelected subnet IP: ", ip_addr)
 		type(ip_addr)
-		print('\nPlease enter the subnet IP you want to scan ['+ip_addr+']:\n')
-		left_index = int(input('\nGive me the left index of range of hosts to scan:\n'))
-		right_index = int(input('\nGive me the right index of range of hosts to scan:\n'))
     
 
 	if resp_2 == '1':
 		# if I want to do an ARP scan then I'm here
-		if left_index == right_index:
+		if resp_1 == '1':
 			os.system('nmap -sn -PR ' + ip_addr)
 		else:
 			arp_scan(ip_addr, left_index, right_index)
 	elif resp_2 == '2':
 		# if I want to do an ICMP scan then I'm here
-		if left_index == right_index:
-			os.system('ping -c 2 ' + ip_addr)
+		if resp_1 == '1':
+			os.system('fping '+ ip_addr)
 		else:
-			icmp_host_disc(ip_addr, left_index, right_index)
+			print('\nThe following hosts are alive:')
+			os.system('fping -a -g -r 1 '+ ip_addr +'/24 2> /dev/null')
+			
 	else:
 		# if I want to do a port scanning then I'm here
 		if resp_1 == '1': 
