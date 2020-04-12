@@ -89,7 +89,7 @@ def scan():
 			4) UDP scan
 			5) OS detection (stack fingerprinting)
 			6) Aggressive scan(OS and version detection)
-			7) Services versions scan \n""")
+			7) Versions of services scan \n""")
 
 			resp_4 = input("""\nWhat ports you want to scan?"
 			1) particular port    
