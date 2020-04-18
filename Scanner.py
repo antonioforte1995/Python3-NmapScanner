@@ -94,8 +94,8 @@ def scan():
 			resp_4 = input("""\nWhat ports you want to scan?"
 			1) particular port    
 			2) Fast scan (scan only the most important ports. SYN flag is used..)                    
-			3) particular range of ports [1-1024]\n""")
-
+			3) particular range of ports [1-1024]
+			4) all 65.536 ports\n""")
 
 			if resp_4 == '1':
 				# if I want to scan a particular port then I'm here
@@ -118,10 +118,21 @@ def scan():
 			elif resp_4 == '2':
 				# if I want to scan only the most important ports then I'm here
 				os.system('nmap -Pn -F ' + ip_addr)
-			else:
+			elif resp_4 == '3':
 				# if I want to scan a particular range of ports [1-1024] then I'm here
 				port_scan(resp_3, ip_addr)
-	    
+			else:
+				# if I want to scan all 65.536 ports then I'm here
+				resp_4 = input("""\nWhat ports do you want to scan?:
+				1) TCP ports
+				2) UDP ports
+				3) TCP and UDP ports\n""")
+				if resp_4 == '1':
+					os.system('nmap -p- ' + ip_addr)
+				elif resp_4 == '2': 
+					os.system('nmap -sU -p- ' + ip_addr)
+				else:  
+					os.system('nmap -sU -sT -p- ' + ip_addr)
 
 #this function asks for user if he want to do a new scan
 def again():
