@@ -7,14 +7,6 @@ import os
 import nmap
 
 
-#this function is used to make an ARP scan on a particular network
-def arp_scan(ip_addr: str, left_index: int, right_index: int):
-    for n in range(left_index, right_index+1):
-        subnet = ip_addr[0:12]
-        ip = subnet+'{0}'.format(n)
-        os.system('nmap -PR ' + ip)
-
-
 #this function is used to make ports scan of a particular host
 def port_scan(resp_3: int, ip_addr: str):
 		if resp_3 == '1':
@@ -69,7 +61,8 @@ def scan():
 		if resp_1 == '1':
 			os.system('nmap -sn -PR ' + ip_addr)
 		else:
-			arp_scan(ip_addr, left_index, right_index)
+			subnet = ip_addr[0:12]
+			os.system('nmap -sn -PR ' + subnet + '*')
 	elif resp_2 == '2':
 		# if I want to do an ICMP scan then I'm here
 		if resp_1 == '1':
