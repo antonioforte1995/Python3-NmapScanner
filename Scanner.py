@@ -61,8 +61,8 @@ def scan():
 		if resp_1 == '1':
 			os.system('nmap -sn -PR ' + ip_addr)
 		else:
-			subnet = ip_addr[0:12]
-			os.system('nmap -sn -PR ' + subnet + '*')
+			subnet = ".".join(ip_addr.split(".", 3)[:3])
+			os.system('nmap -sn -PR ' + subnet + '.*')
 	elif resp_2 == '2':
 		# if I want to do an ICMP scan then I'm here
 		if resp_1 == '1':
